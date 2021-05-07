@@ -1,24 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { provincias } from './data/provincias';
-import { producto } from './data/producto';
-import { cliente } from './data/cliente';  
+import { producto } from './data/producto'; 
 
     class FormCheck extends React.Component{
         constructor(props){
             super(props)       
 
             this.state={
-                display:false,      
-                name:'',
-                surname:'',
+                display: false,      
+                name:"",
+                surname:"",
+                email:"",
                 phone:0,
-                address:'',
+                address:"",
                 naddress:0,
-                selectvalue: 'Alicante'              
-            };
-            
+                selectvalue: "Alicante",              
+            };       
             this.select_handleChange = this.select_handleChange.bind(this);
         } 
 
@@ -28,7 +27,7 @@ import { cliente } from './data/cliente';
             this.setState({[e.target.name]: e.target.value})          
           }
 
-        handleSubmitCheck = () => {
+        submitCheck = () => {
             if(!this.state.name || !this.state.surname){
                 alert("Introduce tu nombre y apellidos");
             }else if(!this.state.email.match(/@./g)){
@@ -50,7 +49,7 @@ import { cliente } from './data/cliente';
         
         reset_form = () =>{
             this.setState({
-                display: !this.state.display,
+                display:!this.state.display,
                 name:'',
                 surname:'',
                 phone:0,
@@ -60,21 +59,21 @@ import { cliente } from './data/cliente';
             });
         }
 
-        render(){
+        formulario(){
             return(
                 <div className="form">
                     <label className="form-label">Nombre</label>
-                    <input filter="[^a-zA-Z ]" id='nom' name="nom" type="text" onChange={this.inputCheck} className="form-control" />
+                    <input filter="[^a-zA-Z ]" id='nom' name="name" type="text" onChange={this.inputCheck} className="form-control" />
                     <label className="form-label">Apellidos</label>
-                    <input filter="[^a-zA-Z ]" id='apell' name="apell" type="text" onChange={this.inputCheck} className="form-control"/>
+                    <input filter="[^a-zA-Z ]" id='apell' name="surname" type="text" onChange={this.inputCheck} className="form-control"/>
                     <label className="form-label">Email</label>
-                    <input name="ema" type="email" className="form-control"/>
+                    <input name="email" type="email" onChange={(e)=>{this.setState({email:e.target.value})}} className="form-control"/>
                     <label className="form-label">Teléfono</label>
-                    <input filter="[^0-9]" maxLength="9" name="tel" type="text" onChange={this.inputCheck} className="form-control"/>
+                    <input filter="[^0-9]" maxLength="9" name="phone" type="text" onChange={this.inputCheck} className="form-control"/>
                     <label className="form-label">Dirección</label>
-                    <input name="dir" type="text" className="form-control"/>
+                    <input name="address" type="text" onChange={this.inputCheck} className="form-control"/>
                     <label className="form-label">Número de dirección</label>
-                    <input filter="[^0-9]" name="dnum" type="text" maxLength="3" onChange={this.inputCheck} className="form-control"/>
+                    <input filter="[^0-9]" name="naddress" type="text" maxLength="3" onChange={this.inputCheck} className="form-control"/>
                     <label className="form-label">Provincias</label>
                     <select value={this.state.selectvalue} onChange={this.select_handleChange} className="form-select">
                     {provincias.map((provincia) => (
@@ -84,9 +83,21 @@ import { cliente } from './data/cliente';
                     ))}
                     </select>
                     <br/>
-                    <button className="btn btn-primary">Enviar</button>
+                    <button onClick={this.submitCheck} className="btn btn-primary">Enviar</button>
                 </div> 
             );            
+        }
+
+        producto(){
+            return(
+                <div className="form">
+                    <p>{producto.name}</p>
+                </div>
+            );   
+        }
+
+        render(){
+            return this.state.display ? this.producto() : this.formulario();
         }
     }
 
