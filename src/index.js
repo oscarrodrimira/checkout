@@ -40,7 +40,7 @@ import { cliente } from './data/cliente';
             }else if(this.state.naddress.length<3||!this.state.naddress){
                 alert("Introduce un número de dirección válido");
             }else{
-                this.setState=({display:true})
+                this.setState=({display:true});
             }
         }
 
